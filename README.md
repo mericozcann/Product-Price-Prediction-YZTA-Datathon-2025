@@ -1,45 +1,45 @@
-# 🛍️ Ürün Fiyat Tahmin Modeli
+# 🛍️ Product Price Prediction Model
 
-Bu proje, **Kaggle - academy2025** yarışmasından alınan bir veri seti kullanılarak ürün fiyatlarını tahmin etmeyi amaçlamaktadır. Geliştirilen makine öğrenimi modelleri, ürün, tarih ve pazar bilgileri gibi çeşitli özniteliklere dayanarak fiyat tahmininde bulunur.
+This project aims to predict product prices using a dataset from the **Kaggle - academy2025** competition. The machine learning models developed in this project predict prices based on various features such as product, date, and market information.
 
-## 📁 İçerik
+## 📁 Contents
 
-* [Veri Seti](#veri-seti)
-* [Kurulum](#kurulum)
-* [Veri Keşfi ve Ön İşleme](#veri-keşfi-ve-ön-işleme)
-* [Özellik Mühendisliği](#özellik-mühendisliği)
-* [Modelleme ve Değerlendirme](#modelleme-ve-değerlendirme)
-* [Sonuçlar](#sonu00e7lar)
-
----
-
-## 📊 Veri Seti
-
-**Kaynak:** Kaggle - academy2025 yarışması
-**Dosyalar:**
-
-* `train.csv`: Eğitim veri seti (227520 satır, 8 sütun)
-* `testFeatures.csv`: Test veri seti (45504 satır, 8 sütun)
-
-**Sütunlar:**
-
-* `tarih`: Ürün fiyatının kaydedildiği tarih
-* `ürün`: Ürünün adı
-* `ürün besin değeri`: Ürünün besin içeriği
-* `ürün kategorisi`: Kategorisi
-* `ürün fiyatı`: Hedef değişken
-* `ürün üretim yeri`: Üretim yeri
-* `market`: Satıldığı market
-* `şehir`: Satış yapılan şehir
-* `id`: (sadece test setinde)
-
-Veri setlerinde eksik değer bulunmamaktadır.
+* [Dataset](#-dataset)
+* [Setup](#-setup)
+* [Exploratory Data Analysis and Preprocessing](#-exploratory-data-analysis-and-preprocessing)
+* [Feature Engineering](#-feature-engineering)
+* [Modeling and Evaluation](#-modeling-and-evaluation)
+* [Results](#-results)
 
 ---
 
-## ⚙️ Kurulum
+## 📊 Dataset
 
-Aşağıdaki kütüphanelerin yüklü olması gerekmektedir:
+**Source:** Kaggle - academy2025 competition  
+**Files:**
+
+* `train.csv`: Training dataset (227,520 rows, 8 columns)
+* `testFeatures.csv`: Test dataset (45,504 rows, 8 columns)
+
+**Columns:**
+
+* `date`: Date when the product price was recorded
+* `product`: Product name
+* `product_nutritional_value`: Nutritional content of the product
+* `product_category`: Product category
+* `product_price`: Target variable (price)
+* `product_origin`: Place of production
+* `market`: Market where the product was sold
+* `city`: City where the product was sold
+* `id`: (only in test set)
+
+There are no missing values in the datasets.
+
+---
+
+## ⚙️ Setup
+
+The following libraries are required:
 
 ```bash
 pip install pandas numpy seaborn matplotlib scikit-learn xgboost
@@ -47,30 +47,29 @@ pip install pandas numpy seaborn matplotlib scikit-learn xgboost
 
 ---
 
-## 🔍 Veri Keşfi ve Ön İşleme
+## 🔍 Exploratory Data Analysis and Preprocessing
 
-* `tarih` sütunu `date` olarak yeniden adlandırıldı ve `year`, `month`, `day`, `week`, `season` gibi zaman tabanlı değişkenler çıkarıldı.
-* Aykırı değerler Z-skoru yöntemine göre temizlendi (`ürün fiyatı`, `ürün besin değeri`).
-* Kategorik değişenlerin hedef değişkenle ilişkisi görselleştirildi (boxplotlar).
-
----
-
-## 💠 Özellik Mühendisliği
-
-* **Mean Encoding:** `ürün`, `market`, `şehir`, `ürün kategorisi`, `üretim yeri` sütunları hedefe göre ortalama kodlandı.
-* **Yeni Özellikler:**
-
-  * `hafta_sonu` (gün bazlı)
-  * `tatil_sezonu` (ay bazlı)
-* **One-Hot Encoding:** Ortalama kodlanmış sütunların ayrıştırılması.
-* **Korelasyon Matrisi:** Sayısal öznitelikler arasında ilişki ısı haritası ile analiz edildi.
-* **RFE (Recursive Feature Elimination):** En iyi 10 özellik belirlendi.
+* The `tarih` column was renamed to `date` and time-based features such as `year`, `month`, `day`, `week`, and `season` were extracted.
+* Outliers were removed using the Z-score method (applied to `product_price` and `product_nutritional_value`).
+* Relationships between categorical variables and the target variable were visualized using boxplots.
 
 ---
 
-## 🤖 Modelleme ve Değerlendirme
+## 💠 Feature Engineering
 
-Farklı modeller RMSE, MAE ve R² metrikleriyle değerlendirildi:
+* **Mean Encoding:** Applied to `product`, `market`, `city`, `product_category`, and `product_origin`.
+* **New Features:**
+  * `weekend` (day-based)
+  * `holiday_season` (month-based)
+* **One-Hot Encoding:** Added for mean-encoded columns.
+* **Correlation Matrix:** Relationships between numerical features were analyzed using a heatmap.
+* **RFE (Recursive Feature Elimination):** The top 10 features were selected.
+
+---
+
+## 🤖 Modeling and Evaluation
+
+Different models were evaluated using RMSE, MAE, and R² metrics:
 
 ### 📈 Linear Regression
 
@@ -86,42 +85,42 @@ Farklı modeller RMSE, MAE ve R² metrikleriyle değerlendirildi:
 
 ### 🚀 XGBoost Regressor
 
-* **İlk Model:**
-
+* **Initial Model:**
   * RMSE: 1.10, MAE: 0.65, R²: 0.9942
-* **Erken Durdurma ve Regularization:**
-
+* **With Early Stopping and Regularization:**
   * RMSE: 1.46, MAE: 0.89, R²: 0.9897
-* **RandomizedSearchCV ile Optimizasyon:**
-
-  * En iyi parametreler:
-
+* **Optimized with RandomizedSearchCV:**
+  * Best parameters:
     ```python
-    {'subsample': 1.0, 'reg_lambda': 1, 'reg_alpha': 0.5,
-     'min_child_weight': 3, 'max_depth': 6, 'colsample_bytree': 0.9}
+    {
+      'subsample': 1.0,
+      'reg_lambda': 1,
+      'reg_alpha': 0.5,
+      'min_child_weight': 3,
+      'max_depth': 6,
+      'colsample_bytree': 0.9
+    }
     ```
   * RMSE: 1.16, MAE: 0.68, R²: 0.9935
-* **Final RFE Modeli (10 özellik ile):**
-
+* **Final RFE Model (10 features):**
   * RMSE: 1.35, MAE: 0.76, R²: 0.9912
-* **Final Optimize Model (Regularization + EarlyStopping):**
-
+* **Final Optimized Model (Regularization + EarlyStopping):**
   * RMSE: 1.58, MAE: 0.95, R²: 0.9879
 
 ---
 
-## 📌 Sonuçlar
+## 📌 Results
 
-* **XGBoost Regressor**, doğrusal regresyon ve rastgele orman modellerine kıyasla en iyi performansı göstermiştir.
-* `ürün_encoded` ve `year`, fiyat tahmininde en etkili özniteliklerdir.
-* **Hiperparametre optimizasyonu**, model başarımını anlamlı ölçüdé iyileştirmiştir.
-* Karmaşıklık azaltma bazı durumlarda performansı düşürse de aşırı öğrenmeyi azaltmıştır.
+* **XGBoost Regressor** outperformed linear regression and random forest models.
+* `product_encoded` and `year` were the most important features in price prediction.
+* **Hyperparameter optimization** significantly improved model performance.
+* Reducing complexity sometimes slightly decreased performance but helped reduce overfitting.
 
 ---
 
-## 🔮 Gelecek Çalışmalar
+## 🔮 Future Work
 
-* GridSearchCV ile daha detaylı hiperparametre aramaları
-* Alternatif regresyon modelleri (CatBoost, LightGBM)
-* Yeni zaman serisi tabanlı özelliklerin eklenmesi
-* Veri artırımı ve model ansamblları
+* More detailed hyperparameter searches using GridSearchCV
+* Explore alternative regression models (CatBoost, LightGBM)
+* Add new time series-based features
+* Data augmentation and model ensembles
