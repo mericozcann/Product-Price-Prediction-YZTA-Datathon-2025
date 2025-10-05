@@ -1,51 +1,45 @@
 # 🛍️ Product Price Prediction Model
 
-This project aims to predict product prices using a dataset from the **Kaggle - academy2025** competition. The machine learning models developed in this project predict prices based on various features such as product, date, and market information.
+This project aims to predict product prices using the dataset from the Kaggle Academy2025 competition. The machine learning models developed in this project predict prices based on various features such as product, date, and market information.
 
 ## 📁 Contents
 
-* [Dataset](#-dataset)
-* [Setup](#-setup)
-* [Exploratory Data Analysis and Preprocessing](#-exploratory-data-analysis-and-preprocessing)
-* [Feature Engineering](#-feature-engineering)
-* [Modeling and Evaluation](#-modeling-and-evaluation)
-* [Results](#-results)
-
----
+- [Dataset](#-dataset)
+- [Setup](#-setup)
+- [Exploratory Data Analysis and Preprocessing](#-exploratory-data-analysis-and-preprocessing)
+- [Feature Engineering](#-feature-engineering)
+- [Modeling and Evaluation](#-modeling-and-evaluation)
+- [Results](#-results)
+- [Future Work](#-future-work)
+- [License & Kaggle Data Usage](#-license--kaggle-data-usage)
 
 ## 📊 Dataset
 
-**Source:** Kaggle - academy2025 competition  
-**Files:**
+- **Source**: [Kaggle Academy2025 Competition](https://www.kaggle.com/competitions/academy2025/data)
+- **Files**:
+  - `train.csv`: Training dataset (227,520 rows, 8 columns)
+  - `testFeatures.csv`: Test dataset (45,504 rows, 8 columns)
 
-* `train.csv`: Training dataset (227,520 rows, 8 columns)
-* `testFeatures.csv`: Test dataset (45,504 rows, 8 columns)
+- **Columns**:
+  - `date`: Date when the product price was recorded
+  - `product`: Product name
+  - `product_nutritional_value`: Nutritional content of the product
+  - `product_category`: Product category
+  - `product_price`: Target variable (price)
+  - `product_origin`: Place of production
+  - `market`: Market where the product was sold
+  - `city`: City where the product was sold
+  - `id`: (only in test set)
 
-**Columns:**
-
-* `date`: Date when the product price was recorded
-* `product`: Product name
-* `product_nutritional_value`: Nutritional content of the product
-* `product_category`: Product category
-* `product_price`: Target variable (price)
-* `product_origin`: Place of production
-* `market`: Market where the product was sold
-* `city`: City where the product was sold
-* `id`: (only in test set)
-
-There are no missing values in the datasets.
-
----
+- **Missing Values**: None
 
 ## ⚙️ Setup
 
-The following libraries are required:
+Install the required Python libraries:
 
 ```bash
 pip install pandas numpy seaborn matplotlib scikit-learn xgboost
-```
 
----
 
 ## 🔍 Exploratory Data Analysis and Preprocessing
 
@@ -122,5 +116,19 @@ Different models were evaluated using RMSE, MAE, and R² metrics:
 
 * More detailed hyperparameter searches using GridSearchCV
 * Explore alternative regression models (CatBoost, LightGBM)
+
+## 🛡️ License & Kaggle Data Usage
+
+* This project code is released under the MIT License.
+
+* Kaggle Dataset Usage Rules:
+
+* The dataset belongs to the Academy2025 Kaggle Competition and is used for educational purposes and model development only.
+
+* Submissions and work derived from the dataset must comply with Kaggle competition rules.
+
+* The dataset cannot be redistributed outside of Kaggle.
+
+* Notebooks or code sharing is allowed publicly if the dataset itself is not directly shared, and proper citation is given.
 * Add new time series-based features
 * Data augmentation and model ensembles
