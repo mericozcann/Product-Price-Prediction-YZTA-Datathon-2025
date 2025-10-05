@@ -121,7 +121,7 @@ Different models were evaluated using RMSE, MAE, and R² metrics:
 
 * This project code is released under the MIT License.
 
-* Kaggle Dataset Usage Rules:
+### Kaggle Dataset Usage Rules:
 
 * The dataset belongs to the Academy2025 Kaggle Competition and is used for educational purposes and model development only.
 
