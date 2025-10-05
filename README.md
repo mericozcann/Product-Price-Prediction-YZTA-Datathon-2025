@@ -39,7 +39,7 @@ Install the required Python libraries:
 
 ```bash
 pip install pandas numpy seaborn matplotlib scikit-learn xgboost
-
+```
 
 ## 🔍 Exploratory Data Analysis and Preprocessing
 
